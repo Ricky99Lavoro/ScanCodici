@@ -1,0 +1,65 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+             xmlns:dxc="clr-namespace:DevExpress.Maui.Charts;assembly=DevExpress.Maui.Charts"
+             xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
+             xmlns:dxsch="clr-namespace:DevExpress.Maui.Scheduler;assembly=DevExpress.Maui.Scheduler"
+             xmlns:dxg="clr-namespace:DevExpress.Maui.DataGrid;assembly=DevExpress.Maui.DataGrid"
+             xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+             xmlns:dxdf="clr-namespace:DevExpress.Maui.DataForm;assembly=DevExpress.Maui.Editors"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="true"
+             xmlns:local="clr-namespace:DXMauiApp_ScanCodici.Classes"
+             x:Class= "DXMauiApp_ScanCodici.MainPage">
+    
+    <ContentPage.BindingContext>
+        <local:Riga_GridDataViewModel_Items/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid RowDefinitions="100, 100, 50, Auto, Auto,*,50">
+            <Label Grid.Row="0" Text="Inserisci il numero dell'articolo" Padding="0,50,0,0" FontFamily="Univia-Pro" FontSize="20" HorizontalOptions="Center"/>
+            <dxe:TextEdit Grid.Row="1"
+                          Margin="25,20,25,20"
+                          PlaceholderText="Inserisci N. Articolo o Codice a barre"
+                          BorderThickness="1"
+                          x:Name="textEditCode"
+                          Completed="textEditCode_Completed"/>
+            <Button Grid.Row="2"
+                    Text="Aggiungi"
+                    Clicked="Button_AddNewClicked"
+                    TextColor="White"/>
+            <BoxView Margin="0,40,0,0" Grid.Row="3"  HeightRequest="2" Color="Black"/>
+            <Label Grid.Row="4" Text="Lista Articoli" Padding="0,20,0,10" FontFamily="Univia-Pro" FontSize="20" HorizontalOptions="Center"/>
+            <dxg:DataGridView ItemsSource="{Binding Righe_Items}" Grid.Row="5" EditorShowMode="Tap" ColumnHeaderHeight="50" x:Name="grid" CustomCellAppearance="grid_CustomCellAppearance" ReduceHeightToContent="True">
+                <dxg:DataGridView.Columns>
+                    <dxg:TextColumn     FieldName="Description" MinWidth="210"  VerticalContentAlignment="Center"  Caption="Descrizione" IsReadOnly="True"/>
+                    <dxg:TextColumn     FieldName="CodArt"      MinWidth="100"  VerticalContentAlignment="Center"                        IsReadOnly="True"/>
+                    <dxg:NumberColumn   FieldName="QuantitaPre" MinWidth="55"  VerticalContentAlignment="Center" Caption="Qta"                     />
+                    <dxg:NumberColumn   FieldName="Quantita"    MinWidth="90"   VerticalContentAlignment="Center" Caption="Max Qta"      IsReadOnly="True"/>
+                    <dxg:NumberColumn   FieldName="Quantitare"  MinWidth="100"  VerticalContentAlignment="Center" Caption="Quantitare"   IsReadOnly="True" IsVisible="False"/>
+                    <dxg:TextColumn     FieldName="Alias"       MinWidth="100"  VerticalContentAlignment="Center"                        IsReadOnly="True" IsVisible="False"/>
+
+                    <dxg:TemplateColumn FieldName="" MinWidth="30" MaxWidth="30" VerticalContentAlignment="Center">
+                        <dxg:TemplateColumn.DisplayTemplate>
+                            <DataTemplate >
+                                <ImageButton Source="https://static.vecteezy.com/system/resources/previews/019/899/981/original/red-x-free-download-free-png.png" Aspect="AspectFit" Clicked="ImageButton_Clicked"/>
+                            </DataTemplate>
+                        </dxg:TemplateColumn.DisplayTemplate>
+                    </dxg:TemplateColumn>
+
+                </dxg:DataGridView.Columns>
+            </dxg:DataGridView>
+            <Button Grid.Row="6"
+                    Text="Conferma"
+                    Clicked="Button_SaveClicked"
+                    TextColor="White"/>
+        </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+
+
+    <NavigationPage.TitleView>
+        <Label Text="Lista Codici" VerticalOptions="Center" FontSize="Title" TextColor="White"/>
+    </NavigationPage.TitleView>
+</ContentPage>
